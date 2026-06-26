@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>มารวย - บริการครบวงจร</title>
+    <style>
+        /* =======================================================
+           RESET & CORE LAYOUT (ธีมมืด Black & Gold)
+           ======================================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0806;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #120d0a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .web-image-section img {
+            width: 100%;
+            display: block;
+        }
+
+        /* แถบสถานะออนไลน์ */
+        .live-status-bar {
+            background-color: #1a1512;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff66;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00ff66;
+        }
+
+        /* =======================================================
+           โซนปุ่มคู่ (เข้าสู่ระบบ / ติดต่อเรา)
+           ======================================================= */
+        .button-group-container {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-color: #120d0a;
+        }
+
+        .btn-action-style {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 55px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+            transition: transform 0.1s, filter 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .btn-action-style:active {
+            transform: scale(0.98);
+        }
+
+        /* ปุ่มเข้าสู่ระบบ (สีแดง) */
+        .btn-login-red {
+            background: #cc3333; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-login-red:hover {
+            filter: brightness(1.1);
+        }
+
+        /* ปุ่มติดต่อเรา (สีเขียว LINE) */
+        .btn-line-green {
+            background: #1cb842; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-line-green:hover {
+            filter: brightness(1.1);
+        }
+
+        /* จัดตำแหน่งโลโก้ LINE */
+        .line-icon-left {
+            position: absolute;
+            left: 15px;
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        /* =======================================================
+           กล่องรายการธุรกรรม (Gold Feed) 
+           ======================================================= */
+        .gold-feed-container {
+            background: linear-gradient(180deg, #14100b 0%, #0a0805 100%);
+            border: 1px solid #d4af37;
+            border-radius: 16px;
+            padding: 16px;
+            margin: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .gold-feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .gold-feed-header h3 {
+            color: #f3e5ab;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .gold-live-tag {
+            background: linear-gradient(90deg, #d4af37, #b89324);
+            color: #000000;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .gold-feed-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 250px; 
+            overflow: hidden;
+        }
+
+        .gold-feed-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 24, 18, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            padding: 10px 12px;
+            animation: goldSlideIn 0.4s ease-out forwards;
+        }
+
+        .gold-username {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .gold-time {
+            color: #857560;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .gold-item-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .gold-badge-status {
+            font-size: 10px;
+            font-weight: bold;
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        .gold-badge-status.status-withdraw {
+            background-color: rgba(255, 102, 102, 0.15);
+            color: #ff6666;
+        }
+
+        .gold-badge-status.status-deposit {
+            background-color: rgba(212, 175, 55, 0.15);
+            color: #d4af37;
+        }
+
+        .gold-amount {
+            font-size: 13.5px;
+            font-weight: bold;
+        }
+
+        .gold-amount.text-withdraw { color: #ff8888; }
+        .gold-amount.text-deposit { color: #fff1b8; }
+
+        /* =======================================================
+           กล่องรีวิวลูกค้า (Review Cards) 
+           ======================================================= */
+        .review-section-container {
+            padding: 5px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .review-card {
+            background: rgba(30, 24, 18, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .review-user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .review-user-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .review-time {
+            font-size: 11px;
+            color: #857560;
+        }
+
+        .review-body {
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        .review-role {
+            font-size: 11px;
+            color: #d4af37;
+            margin-bottom: 2px;
+        }
+
+        .review-stars {
+            color: #ffcc00;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .review-comment {
+            font-size: 13.5px;
+            color: #f3e5ab;
+            font-weight: 500;
+        }
+
+        @keyframes goldSlideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .footer-space {
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <div class="web-image-section">
+            <img src="images/1.webp" alt="อัตราจ่ายหวย มารวย">
+        </div>
+
+        <div class="live-status-bar">
+            <div class="status-dot"></div>
+            <p style="color: #fff;">ขณะนี้มีผู้ติดต่อออนไลน์อยู่ <span id="online-counter" style="color: #ffcc00; font-weight: bold;">812,469</span> คน</p>
+        </div>
+
+        <div class="button-group-container">
+            <a href="https://maruay.co/register?af=user-11327&ag=mabaa" target="_blank" class="btn-action-style btn-login-red">
+                เข้าสู่ระบบ
+            </a>
+            <a href="https://lin.ee/xHcjiRK" target="_blank" class="btn-action-style btn-line-green">
+                <img src="images/line-l.webp" alt="LINE" class="line-icon-left">
+                ติดต่อเรา
+            </a>
+        </div>
+<div class="web-image-section">
+    <img src="images/baner.webp" alt="แบนเนอร์มารวย">
+</div>
+        <div class="gold-feed-container">
+            <div class="gold-feed-header">
+                <h3>👑 ประวัติรายการล่าสุด</h3>
+                <span class="gold-live-tag">LIVE</span>
+            </div>
+            <div class="gold-feed-list" id="gold-feed-list">
+                </div>
+        </div>
+
+        <div class="web-image-section">
+            <img src="images/content-detail.webp" alt="โปรโมชั่นมารวย">
+        </div>
+
+        <div class="review-section-container">
+            <div class="review-card">
+                <div class="review-user-info">
+                    <span class="review-user-name">👤 ปิยะพร พรมขัน</span>
+                    <span class="review-time">2 นาทีที่แล้ว</span>
+                </div>
+                <div class="review-body">
+                    <div class="review-role">สมาชิกทั่วไป</div>
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="review-comment">ลื่นจริง ประทับใจ</div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-user-info">
+                    <span class="review-user-name">👤 เอมมิกา เรือนประเสริฐ</span>
+                    <span class="review-time">3 นาทีที่แล้ว</span>
+                </div>
+                <div class="review-body">
+                    <div class="review-role">สมาชิกทั่วไป</div>
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="review-comment">ใช้งานง่าย ไม่มีปัญหา</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="web-image-section" style="margin-top: 15px;">
+            <img src="images/review-zone.webp" alt="ประกาศสำคัญมารวย">
+        </div>
+
+        <div class="button-group-container footer-space">
+            <a href="https://maruay.co/register?af=user-11327&ag=mabaa" target="_blank" class="btn-action-style btn-login-red">
+                เข้าสู่ระบบ
+            </a>
+            <a href="https://lin.ee/xHcjiRK" target="_blank" class="btn-action-style btn-line-green">
+                <img src="images/line-l.webp" alt="LINE" class="line-icon-left">
+                ติดต่อเรา
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        function updateCounter() {
+            const counterElement = document.getElementById('online-counter');
+            let currentCount = parseInt(counterElement.innerText.replace(/,/g, ''));
+            let change = Math.floor(Math.random() * 31) - 15; 
+            currentCount += change;
+            counterElement.innerText = currentCount.toLocaleString();
+        }
+        setInterval(updateCounter, 3000);
+
+        const userDatabase = [
+            "คุณ สมชาย เด่นดวง", "คุณ วิภาวรรณ แก้วใส", "คุณ ณัฐพล บุญมา", "คุณ อัญชลี ศรีสุข", 
+            "คุณ ธนกฤต ใจดี", "คุณ พัชราภรณ์ แสงอินทร์", "คุณ ศิริพร นามวงค์", "คุณ ชัยวัฒน์ โตดี", 
+            "คุณ นลินี คงกระพันธ์", "คุณ วรวุฒิ รักชาติ", "คุณ ปิยะพร พรมขัน", "คุณ กชณิช อ่อนคล้าย", 
+            "คุณ ธนวรรณ นามดี", "คุณ อัครพล แสงแก้ว", "คุณ พีรพงษ์ คงดี", "คุณ นภาพร สุขใจ"
+        ];
+
+        function generateGoldRow() {
+            const feedList = document.getElementById('gold-feed-list');
+            if(!feedList) return;
+            const randomName = userDatabase[Math.floor(Math.random() * userDatabase.length)];
+            const isWithdraw = Math.random() > 0.4; 
+            
+            let statusText = isWithdraw ? "ถอน" : "รับยอด";
+            let statusClass = isWithdraw ? "status-withdraw" : "status-deposit";
+            let amountClass = isWithdraw ? "text-withdraw" : "text-deposit";
+            
+            const amount = Math.floor(Math.random() * 5000) + 300;
+            let sign = isWithdraw ? "-" : "+";
+            let amountText = `${sign}฿${amount.toLocaleString()}`;
+
+            const newItem = document.createElement('div');
+            newItem.className = 'gold-feed-item';
+            newItem.innerHTML = `
+                <div class="gold-item-left">
+                    <div>
+                        <p class="gold-username">${statusText}</p>
+                        <p class="gold-time">${randomName}</p>
+                    </div>
+                </div>
+                <div class="gold-item-right">
+                    <span class="gold-amount ${amountClass}">${amountText}</span>
+                </div>
+            `;
+
+            feedList.insertBefore(newItem, feedList.firstChild);
+
+            if (feedList.children.length > 5) {
+                feedList.removeChild(feedList.lastChild);
+            }
+        }
+
+        for(let i=0; i<3; i++) { generateGoldRow(); }
+        setInterval(generateGoldRow, 4000);
+    </script>
+</body>
+</html>

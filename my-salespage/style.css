@@ -1,0 +1,155 @@
+/* =======================================================
+   [หัวข้อที่ 1] ส่วนการตั้งค่าพื้นฐานและควบคุมหน้าจอให้เป็นทรงมือถือ
+   ======================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #121212; /* สีพื้นหลังหน้าจอคอมพิวเตอร์ (สีมืดช่วยขับให้เว็บเด่น) */
+    font-family: 'Helvetica Neue', Arial, Tahoma, sans-serif;
+    color: #333333;
+}
+
+/* บีบหน้าจอให้กว้างสูงสุด 480px (ขนาดหน้าจอมือถือมาตรฐาน) และจัดให้อยู่กึ่งกลางหน้าจอคอม */
+.main-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    position: relative; /* เพื่อให้กล่องแจ้งเตือน Pop-up อ้างอิงตำแหน่งได้ถูกต้อง */
+    overflow-x: hidden;
+}
+
+/* ลบรอยต่อระหว่างรูปภาพ เพื่อให้ภาพยาวต่อกันเนียนสนิท 100% */
+.web-image-section img {
+    width: 100%;
+    display: block;
+    height: auto;
+}
+
+/* =======================================================
+   [หัวข้อที่ 4] ตกแต่งเครื่องมือ: กล่องสถานะออนไลน์ และ ปุ่มกดแอดไลน์
+   ======================================================= */
+
+/* กล่องสถานะคนออนไลน์ */
+.live-status-bar {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* จุดไฟสีเขียวกะพริบ */
+.status-dot {
+    width: 9px;
+    height: 9px;
+    background-color: #00ff66;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00ff66;
+}
+
+#online-counter {
+    color: #ffcc00; /* ตัวเลขสีเหลืองทองเด่น ๆ */
+    font-weight: bold;
+}
+
+/* โซนปุ่มกด Call to Action */
+.cta-container {
+    padding: 20px 16px;
+    background-color: #ffffff;
+}
+
+.footer-space {
+    padding-bottom: 50px; /* เพิ่มช่องว่างด้านล่างสุดของเว็บ */
+}
+
+/* ดีไซน์ปุ่มแอดไลน์ */
+.line-btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(180deg, #06C755 0%, #05B34C 100%); /* ไล่เฉดสีเขียว Line */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 50px; /* ปุ่มโค้งมนเรียบหรู */
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(6, 199, 85, 0.4);
+}
+
+.line-btn-action img {
+    width: 26px;
+    height: 26px;
+}
+
+/* เอฟเฟกต์ปุ่มขยายเข้า-ออกดึงดูดสายตา (Pulse Animation) */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+/* =======================================================
+   [หัวข้อ #4] ดีไซน์กล่องแจ้งเตือนรายการล่าสุด (Notification Pop-up)
+   ======================================================= */
+.notification-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(150px); /* ซ่อนไว้ใต้จอก่อน */
+    width: 90%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
+    transition: transform 0.5s ease-in-out; /* เวลาเด้งขึ้นจะดูสมูท */
+    z-index: 9999;
+    border-left: 5px solid #06C755; /* ขีดเส้นสีเขียวด้านข้างให้ดูน่าสนใจ */
+}
+
+/* เมื่อสั่งให้กล่องนี้ทำงาน (มี class .show) ให้เลื่อนเด้งขึ้นมา */
+.notification-popup.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.noti-avatar {
+    font-size: 24px;
+}
+
+.noti-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.noti-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #222222;
+}
+
+.noti-text {
+    font-size: 12px;
+    color: #666666;
+}
