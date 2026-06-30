@@ -6,8 +6,8 @@
     <title>มารวย - บริการครบวงจร</title>
     <style>
         /* =======================================================
-           RESET & CORE LAYOUT (ธีมมืด Black & Gold)
-           ======================================================= */
+            RESET & CORE LAYOUT (ธีมมืด Black & Gold)
+            ======================================================= */
         * {
             margin: 0;
             padding: 0;
@@ -60,8 +60,8 @@
         }
 
         /* =======================================================
-           โซนปุ่มคู่ (เข้าสู่ระบบ / ติดต่อเรา)
-           ======================================================= */
+            โซนปุ่มคู่ (เข้าสู่ระบบ / ติดต่อเรา)
+            ======================================================= */
         .button-group-container {
             padding: 15px;
             display: flex;
@@ -108,18 +108,19 @@
             filter: brightness(1.1);
         }
 
-        /* จัดตำแหน่งโลโก้ LINE */
-        .line-icon-left {
+        /* จัดตำแหน่งโลโก้ในปุ่ม */
+        .icon-left {
             position: absolute;
             left: 15px;
             width: 32px;
             height: 32px;
             object-fit: contain;
+            border-radius: 50%; /* ทำให้รูปในปุ่มเป็นวงกลมตามโลโก้ */
         }
 
         /* =======================================================
-           กล่องรายการธุรกรรม (Gold Feed) 
-           ======================================================= */
+            กล่องรายการธุรกรรม (Gold Feed) 
+            ======================================================= */
         .gold-feed-container {
             background: linear-gradient(180deg, #14100b 0%, #0a0805 100%);
             border: 1px solid #d4af37;
@@ -191,23 +192,6 @@
             gap: 2px;
         }
 
-        .gold-badge-status {
-            font-size: 10px;
-            font-weight: bold;
-            padding: 1px 6px;
-            border-radius: 4px;
-        }
-
-        .gold-badge-status.status-withdraw {
-            background-color: rgba(255, 102, 102, 0.15);
-            color: #ff6666;
-        }
-
-        .gold-badge-status.status-deposit {
-            background-color: rgba(212, 175, 55, 0.15);
-            color: #d4af37;
-        }
-
         .gold-amount {
             font-size: 13.5px;
             font-weight: bold;
@@ -217,8 +201,8 @@
         .gold-amount.text-deposit { color: #fff1b8; }
 
         /* =======================================================
-           กล่องรีวิวลูกค้า (Review Cards) 
-           ======================================================= */
+            กล่องรีวิวลูกค้า (Review Cards) 
+            ======================================================= */
         .review-section-container {
             padding: 5px 15px;
             display: flex;
@@ -234,6 +218,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            animation: fadeInReview 0.5s ease-in-out;
         }
 
         .review-user-info {
@@ -281,6 +266,11 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        @keyframes fadeInReview {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         .footer-space {
             margin-bottom: 25px;
         }
@@ -301,16 +291,21 @@
 
         <div class="button-group-container">
             <a href="https://maruay.co/register?af=user-11327&ag=mabaa" target="_blank" class="btn-action-style btn-login-red">
+                <!-- เปลี่ยนเป็นชื่อไฟล์ที่ถูกต้องตามภาพ -->
+                <img src="images/เข้าสู่ระบบ.webp" alt="Login" class="icon-left">
                 เข้าสู่ระบบ
             </a>
             <a href="https://lin.ee/xHcjiRK" target="_blank" class="btn-action-style btn-line-green">
-                <img src="images/line-l.webp" alt="LINE" class="line-icon-left">
+                <!-- ใช้ไฟล์ line-l.webp ที่คุณมีในโฟลเดอร์ -->
+                <img src="images/line-l.webp" alt="LINE" class="icon-left">
                 ติดต่อเรา
             </a>
         </div>
-<div class="web-image-section">
-    <img src="images/baner.webp" alt="แบนเนอร์มารวย">
-</div>
+        
+        <div class="web-image-section">
+            <img src="images/baner.webp" alt="แบนเนอร์มารวย">
+        </div>
+
         <div class="gold-feed-container">
             <div class="gold-feed-header">
                 <h3>👑 ประวัติรายการล่าสุด</h3>
@@ -324,31 +319,8 @@
             <img src="images/content-detail.webp" alt="โปรโมชั่นมารวย">
         </div>
 
-        <div class="review-section-container">
-            <div class="review-card">
-                <div class="review-user-info">
-                    <span class="review-user-name">👤 ปิยะพร พรมขัน</span>
-                    <span class="review-time">2 นาทีที่แล้ว</span>
-                </div>
-                <div class="review-body">
-                    <div class="review-role">สมาชิกทั่วไป</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="review-comment">ลื่นจริง ประทับใจ</div>
-                </div>
+        <div class="review-section-container" id="review-section-container">
             </div>
-
-            <div class="review-card">
-                <div class="review-user-info">
-                    <span class="review-user-name">👤 เอมมิกา เรือนประเสริฐ</span>
-                    <span class="review-time">3 นาทีที่แล้ว</span>
-                </div>
-                <div class="review-body">
-                    <div class="review-role">สมาชิกทั่วไป</div>
-                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="review-comment">ใช้งานง่าย ไม่มีปัญหา</div>
-                </div>
-            </div>
-        </div>
 
         <div class="web-image-section" style="margin-top: 15px;">
             <img src="images/review-zone.webp" alt="ประกาศสำคัญมารวย">
@@ -356,10 +328,13 @@
 
         <div class="button-group-container footer-space">
             <a href="https://maruay.co/register?af=user-11327&ag=mabaa" target="_blank" class="btn-action-style btn-login-red">
+                <!-- เปลี่ยนเป็นชื่อไฟล์ที่ถูกต้องตามภาพ -->
+                <img src="images/เข้าสู่ระบบ.webp" alt="Login" class="icon-left">
                 เข้าสู่ระบบ
             </a>
             <a href="https://lin.ee/xHcjiRK" target="_blank" class="btn-action-style btn-line-green">
-                <img src="images/line-l.webp" alt="LINE" class="line-icon-left">
+                <!-- ใช้ไฟล์ line-l.webp ที่คุณมีในโฟลเดอร์ -->
+                <img src="images/line-l.webp" alt="LINE" class="icon-left">
                 ติดต่อเรา
             </a>
         </div>
@@ -367,6 +342,7 @@
     </div>
 
     <script>
+        // ... (Javascript คงเดิม) ...
         function updateCounter() {
             const counterElement = document.getElementById('online-counter');
             let currentCount = parseInt(counterElement.innerText.replace(/,/g, ''));
@@ -387,15 +363,19 @@
             const feedList = document.getElementById('gold-feed-list');
             if(!feedList) return;
             const randomName = userDatabase[Math.floor(Math.random() * userDatabase.length)];
-            const isWithdraw = Math.random() > 0.4; 
-            
-            let statusText = isWithdraw ? "ถอน" : "รับยอด";
-            let statusClass = isWithdraw ? "status-withdraw" : "status-deposit";
+            const isWithdraw = Math.random() > 0.5; 
+            let statusText = isWithdraw ? "ถอนเงิน" : "ฝากเงิน";
             let amountClass = isWithdraw ? "text-withdraw" : "text-deposit";
-            
-            const amount = Math.floor(Math.random() * 5000) + 300;
-            let sign = isWithdraw ? "-" : "+";
-            let amountText = `${sign}฿${amount.toLocaleString()}`;
+            let amountText = "";
+
+            if (isWithdraw) {
+                const baseAmount = Math.floor(Math.random() * (500000 - 200000 + 1)) + 200000;
+                const decimal = Math.floor(Math.random() * 99) + 1;
+                amountText = `-฿${baseAmount.toLocaleString()}.${decimal.toString().padStart(2, '0')}`;
+            } else {
+                const amount = Math.floor(Math.random() * (150000 - 3000 + 1)) + 3000;
+                amountText = `+฿${amount.toLocaleString()}`;
+            }
 
             const newItem = document.createElement('div');
             newItem.className = 'gold-feed-item';
@@ -410,9 +390,7 @@
                     <span class="gold-amount ${amountClass}">${amountText}</span>
                 </div>
             `;
-
             feedList.insertBefore(newItem, feedList.firstChild);
-
             if (feedList.children.length > 5) {
                 feedList.removeChild(feedList.lastChild);
             }
@@ -420,6 +398,56 @@
 
         for(let i=0; i<3; i++) { generateGoldRow(); }
         setInterval(generateGoldRow, 4000);
+
+        const reviewDatabase = [
+            { name: "ปิยะพร พรมขัน", role: "สมาชิกทั่วไป", comment: "ลื่นจริง ประทับใจมากค่ะ" },
+            { name: "เอมมิกา เรือนประเสริฐ", role: "สมาชิกทั่วไป", comment: "ใช้งานง่าย ไม่มีปัญหาเลย" },
+            { name: "สมชาย รักดี", role: "VIP", comment: "ถอนไวมากครับ ระบบดีเยี่ยม" },
+            { name: "วิภาวรรณ สดใส", role: "สมาชิกทั่วไป", comment: "แอดมินตอบเร็ว ดูแลดีมาก" },
+            { name: "ณัฐพล สุดยอด", role: "สมาชิกทั่วไป", comment: "ระบบเสถียรดีครับ ไว้ใจได้" },
+            { name: "อัญชลี ศรีสุข", role: "VIP", comment: "โปรโมชั่นคุ้มมาก แนะนำเลยค่ะ" },
+            { name: "ธนกฤต ใจดี", role: "สมาชิกทั่วไป", comment: "เล่นง่าย ได้เงินจริงครับ" },
+            { name: "พัชราภรณ์ แสงอินทร์", role: "สมาชิกทั่วไป", comment: "ฝาก-ถอน ไม่ต้องรอนานเลย" },
+            { name: "ศิริพร นามวงค์", role: "สมาชิกทั่วไป", comment: "ชอบมากค่ะ แนะนำให้เพื่อนมาเล่นเยอะเลย" },
+            { name: "ชัยวัฒน์ โตดี", role: "VIP", comment: "ไว้ใจได้ 100% เล่นที่นี่ประจำ" },
+            { name: "นลินี คงกระพันธ์", role: "สมาชิกทั่วไป", comment: "บริการดีเยี่ยม ประทับใจสุดๆ" },
+            { name: "วรวุฒิ รักชาติ", role: "สมาชิกทั่วไป", comment: "สุดยอดเว็บเลยครับ จ่ายชัวร์" },
+            { name: "กชณิช อ่อนคล้าย", role: "VIP", comment: "เล่นประจำเลยค่ะ แตกบ่อยมาก" },
+            { name: "ธนวรรณ นามดี", role: "สมาชิกทั่วไป", comment: "ไม่มีสะดุดเลย ไหลลื่นดีมาก" },
+            { name: "อัครพล แสงแก้ว", role: "สมาชิกทั่วไป", comment: "จ่ายจริง จ่ายชัวร์ ยอดเข้าไว" },
+            { name: "พีรพงษ์ คงดี", role: "VIP", comment: "ระบบออโต้ดีมาก ไม่ต้องรอแอดมิน" },
+            { name: "นภาพร สุขใจ", role: "สมาชิกทั่วไป", comment: "เพื่อนแนะนำมา ดีจริงๆค่ะ" },
+            { name: "จิรศักดิ์ มีชัย", role: "สมาชิกทั่วไป", comment: "ถอนปุ๊บเข้าปั๊บ สุดยอดมาก" },
+            { name: "สุพรรณี ดวงดี", role: "สมาชิกทั่วไป", comment: "แอดมินน่ารักมาก ให้คำปรึกษาดี" },
+            { name: "เกียรติศักดิ์ พลสิทธิ์", role: "VIP", comment: "ครบจบในเว็บเดียว มั่นคงครับ" }
+        ];
+
+        function updateReviews() {
+            const reviewContainer = document.getElementById('review-section-container');
+            if (!reviewContainer) return;
+            let shuffled = [...reviewDatabase].sort(() => 0.5 - Math.random());
+            let selectedReviews = shuffled.slice(0, 3);
+            reviewContainer.innerHTML = '';
+            selectedReviews.forEach(review => {
+                const timeAgo = Math.floor(Math.random() * 15) + 1;
+                const reviewEl = document.createElement('div');
+                reviewEl.className = 'review-card';
+                reviewEl.innerHTML = `
+                    <div class="review-user-info">
+                        <span class="review-user-name">👤 ${review.name}</span>
+                        <span class="review-time">${timeAgo} นาทีที่แล้ว</span>
+                    </div>
+                    <div class="review-body">
+                        <div class="review-role">${review.role}</div>
+                        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                        <div class="review-comment">${review.comment}</div>
+                    </div>
+                `;
+                reviewContainer.appendChild(reviewEl);
+            });
+        }
+        updateReviews();
+        setInterval(updateReviews, 5000); 
     </script>
 </body>
 </html>
